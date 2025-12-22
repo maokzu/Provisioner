@@ -2,7 +2,7 @@
 ## Title: Provisioner
 ## Notes: Track farming goals with ease
 ## Author: Mao_KZU
-## Version: 1.0.0
+## Version: 1.0.1
 ## SavedVariables: ProvisionerDB
 
 Locales.lua
