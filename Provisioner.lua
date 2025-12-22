@@ -16,9 +16,14 @@ SlashCmdList["PROVISIONER"] = function(msg)
         print("Provisioner Debug: DB Exists?", ProvisionerDB ~= nil)
         print("Items Tracked:", ProvisionerDB and ProvisionerDB.trackedItems and #ProvisionerDB.trackedItems or "N/A")
     else
-        print("|cFF00FF00Provisioner|r Commands:")
-        print("  |cFFFFD700/prov reset|r - Reset database")
-        print("  |cFFFFD700Alt+RightClick|r item in bag to track.")
+        -- Toggle Manager Window
+        Provisioner:CreateManagerWindow()
+        if Provisioner.managerFrame:IsShown() then
+            Provisioner.managerFrame:Hide()
+        else
+            Provisioner.managerFrame:Show()
+            Provisioner:UpdateManagerList()
+        end
     end
 end
 
