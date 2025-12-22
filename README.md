@@ -25,7 +25,7 @@ Provisioner is a lightweight WoW addon that helps you track items and set farmin
 
 ### 🚀 Installation
 
-1. Download the latest release
+1. Download the [latest release](https://github.com/maokzu/Provisioner/releases/tag/v1.0)
 2. Extract the `Provisioner` folder to `World of Warcraft\_retail_\Interface\AddOns\`
 3. Restart WoW or type `/reload` in-game
 4. Type `/prov` to open the Manager window
@@ -46,7 +46,7 @@ Provisioner is a lightweight WoW addon that helps you track items and set farmin
 Developed with passion by **Mao_KZU**
 
 - Twitch: [twitch.tv/mao_kzu](https://www.twitch.tv/mao_kzu)
-- GitHub: [github.com/Mao-KZU/Provisioner](https://github.com/Mao-KZU/Provisioner)
+- GitHub: [github.com/maokzu/Provisioner](https://github.com/maokzu/Provisioner)
 
 ### 📜 License
 
@@ -73,7 +73,7 @@ Provisioner est un addon WoW léger qui vous aide à suivre vos objectifs de far
 
 ### 🚀 Installation
 
-1. Téléchargez la dernière version
+1. Téléchargez la [dernière version](https://github.com/maokzu/Provisioner/releases/tag/v1.0)
 2. Extrayez le dossier `Provisioner` dans `World of Warcraft\_retail_\Interface\AddOns\`
 3. Redémarrez WoW ou tapez `/reload` en jeu
 4. Tapez `/prov` pour ouvrir la fenêtre Manager
@@ -94,7 +94,7 @@ Provisioner est un addon WoW léger qui vous aide à suivre vos objectifs de far
 Développé avec passion par **Mao_KZU**
 
 - Twitch: [twitch.tv/mao_kzu](https://www.twitch.tv/mao_kzu)
-- GitHub: [github.com/Mao-KZU/Provisioner](https://github.com/Mao-KZU/Provisioner)
+- GitHub: [github.com/maokzu/Provisioner](https://github.com/maokzu/Provisioner)
 
 ### 📜 Licence
 
