@@ -1,0 +1,15 @@
+# WoW Addon Development
+*.bak
+*.tmp
+*~
+
+# OS Files
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+
+# Git
+.git/

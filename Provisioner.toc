@@ -1,0 +1,10 @@
+## Interface: 110007
+## Title: Provisioner
+## Notes: Track farming goals with ease
+## Author: Mao_KZU
+## Version: 1.0.0
+## SavedVariables: ProvisionerDB
+
+Locales.lua
+Provisioner.lua
+Provisioner.xml
