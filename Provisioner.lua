@@ -914,7 +914,7 @@ function Provisioner:CreateGuideWindow()
     local ghBox = CreateFrame("EditBox", nil, f, "InputBoxTemplate")
     ghBox:SetSize(280, 20)
     ghBox:SetPoint("BOTTOM", 0, 75)
-    ghBox:SetText("https://github.com/Antigravity-Agent/Provisioner")
+    ghBox:SetText("https://github.com/maokzu/Provisioner")
     ghBox:SetAutoFocus(false)
     ghBox:Hide()
     
