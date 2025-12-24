@@ -55,9 +55,16 @@ foreach ($file in $filesToInclude) {
     if (Test-Path $file) {
         Copy-Item -Path $file -Destination $addonDir -Force
         Write-Host "  OK $file" -ForegroundColor Gray
-    } else {
+    }
+    else {
         Write-Host "  WARN $file (fichier manquant, ignore)" -ForegroundColor DarkYellow
     }
+}
+
+# Copier le dossier media s'il existe
+if (Test-Path "media") {
+    Copy-Item -Path "media" -Destination $addonDir -Recurse -Force
+    Write-Host "  OK media/" -ForegroundColor Gray
 }
 
 # Supprimer l'ancien ZIP s'il existe
@@ -83,7 +90,8 @@ if (Test-Path $zipName) {
     Write-Host "  Taille: $([math]::Round($zipSize, 2)) KB" -ForegroundColor Cyan
     Write-Host ""
     Write-Host "Le ZIP contient un dossier Provisioner (sans version)" -ForegroundColor Gray
-} else {
+}
+else {
     Write-Host ""
     Write-Host "Erreur lors de la creation du ZIP!" -ForegroundColor Red
     exit 1

@@ -54,8 +54,9 @@ eventFrame:SetScript("OnEvent", function(self, event, ...)
         if name == addonName then
             Provisioner:InitializeDB()
             Provisioner:SetupMinimizeButton()
+            Provisioner:CreateMinimapButton()
             Provisioner:UpdateUI()
-            print("|cFF00FF00Provisioner|r loaded. Alt+RightClick to track items.")
+            print("|cFF00FF00Provisioner|r loaded. Type |cFFFFFF00/prov|r to open the manager window.")
         end
     elseif event == "PLAYER_LOGIN" then
         Provisioner:UpdateUI()
@@ -166,6 +167,15 @@ function Provisioner:InitializeDB()
     if not ProvisionerDB.trackedItems then ProvisionerDB.trackedItems = {} end
     if not ProvisionerDB.profiles then ProvisionerDB.profiles = {} end
     if not ProvisionerDB.settings then ProvisionerDB.settings = { collapsed = false } end
+    
+    -- Minimap button settings
+    if not ProvisionerDB.settings.minimapButton then
+        ProvisionerDB.settings.minimapButton = {
+            hide = false,
+            minimapPos = 220,
+            radius = 80
+        }
+    end
     
     -- Load Saved Locale if exists
     if ProvisionerDB.settings.locale then
@@ -542,6 +552,9 @@ function Provisioner:CreateManagerWindow()
     f:SetScript("OnDragStart", f.StartMoving)
     f:SetScript("OnDragStop", f.StopMovingOrSizing)
     f:Hide()
+    
+    -- Register for ESC key to close
+    table.insert(UISpecialFrames, "ProvisionerManagerFrame")
 
     -- Dark Premium Backdrop
     f:SetBackdrop({
@@ -894,6 +907,9 @@ function Provisioner:CreateGuideWindow()
     })
     f:SetBackdropColor(0, 0, 0, 0.95)
     
+    -- Register for ESC key to close
+    table.insert(UISpecialFrames, "ProvisionerGuideFrame")
+    
     local close = CreateFrame("Button", nil, f, "UIPanelCloseButton")
     close:SetPoint("TOPRIGHT", -5, -5)
     
@@ -1082,4 +1098,117 @@ function Provisioner:CreateImportWindow()
         end
      end)
      f:Show()
+end
+
+-- --- Minimap Button Logic ---
+
+function Provisioner:CreateMinimapButton()
+    if Provisioner.minimapButton then return end
+    
+    -- Don't create if hidden
+    if ProvisionerDB.settings.minimapButton.hide then return end
+    
+    local btn = CreateFrame("Button", "ProvisionerMinimapButton", Minimap)
+    btn:SetSize(32, 32)
+    btn:SetFrameStrata("MEDIUM")
+    btn:SetFrameLevel(8)
+    btn:SetHighlightTexture("Interface\\Minimap\\UI-Minimap-ZoomButton-Highlight")
+    
+    -- Icon
+    local icon = btn:CreateTexture(nil, "BACKGROUND")
+    icon:SetSize(16, 16)
+    icon:SetPoint("CENTER", 1, 1)
+    icon:SetTexture("Interface\\AddOns\\Provisioner\\media\\provisioner_icon.png")
+    
+    -- Border overlay
+    local overlay = btn:CreateTexture(nil, "OVERLAY")
+    overlay:SetSize(53, 53)
+    overlay:SetPoint("TOPLEFT")
+    overlay:SetTexture("Interface\\Minimap\\MiniMap-TrackingBorder")
+    
+    -- Click handlers
+    btn:RegisterForClicks("LeftButtonUp", "RightButtonUp")
+    btn:SetScript("OnClick", function(self, button)
+        if button == "LeftButton" then
+            -- Toggle main frame
+            if ProvisionerMainFrame:IsShown() then
+                ProvisionerMainFrame:Hide()
+            else
+                ProvisionerMainFrame:Show()
+                Provisioner:UpdateUI()
+            end
+        elseif button == "RightButton" then
+            -- Open Manager
+            Provisioner:CreateManagerWindow()
+            if Provisioner.managerFrame:IsShown() then
+                Provisioner.managerFrame:Hide()
+            else
+                Provisioner.managerFrame:Show()
+                Provisioner:UpdateManagerList()
+            end
+        end
+    end)
+    
+    -- Drag to move around minimap
+    btn:RegisterForDrag("LeftButton")
+    btn:SetScript("OnDragStart", function(self)
+        self.isDragging = true
+        self:SetScript("OnUpdate", Provisioner.UpdateMinimapButtonDrag)
+    end)
+    btn:SetScript("OnDragStop", function(self)
+        self.isDragging = false
+        self:SetScript("OnUpdate", nil)
+    end)
+    
+    -- Tooltip
+    btn:SetScript("OnEnter", function(self)
+        GameTooltip:SetOwner(self, "ANCHOR_LEFT")
+        GameTooltip:SetText("|cFF00FF00Provisioner|r", 1, 1, 1)
+        GameTooltip:AddLine("Left-click: Toggle tracker", 0.8, 0.8, 0.8)
+        GameTooltip:AddLine("Right-click: Open manager", 0.8, 0.8, 0.8)
+        GameTooltip:AddLine("Drag: Move icon", 0.6, 0.6, 0.6)
+        GameTooltip:Show()
+    end)
+    btn:SetScript("OnLeave", function()
+        GameTooltip:Hide()
+    end)
+    
+    Provisioner.minimapButton = btn
+    Provisioner:UpdateMinimapButtonPosition()
+end
+
+function Provisioner:UpdateMinimapButtonPosition()
+    local btn = Provisioner.minimapButton
+    if not btn then return end
+    
+    local pos = ProvisionerDB.settings.minimapButton.minimapPos or 220
+    local radius = ProvisionerDB.settings.minimapButton.radius or 80
+    
+    local angle = math.rad(pos)
+    local x = math.cos(angle) * radius
+    local y = math.sin(angle) * radius
+    
+    btn:ClearAllPoints()
+    btn:SetPoint("CENTER", Minimap, "CENTER", x, y)
+end
+
+function Provisioner:UpdateMinimapButtonDrag()
+    local btn = Provisioner.minimapButton
+    if not btn or not btn.isDragging then return end
+    
+    local mx, my = Minimap:GetCenter()
+    local px, py = GetCursorPosition()
+    local scale = Minimap:GetEffectiveScale()
+    
+    px, py = px / scale, py / scale
+    
+    local angle = math.deg(math.atan2(py - my, px - mx))
+    
+    -- Normalize angle to 0-360
+    if angle < 0 then
+        angle = angle + 360
+    end
+    
+    ProvisionerDB.settings.minimapButton.minimapPos = angle
+    Provisioner:UpdateMinimapButtonPosition()
 end

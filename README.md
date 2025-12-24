@@ -14,6 +14,7 @@ Provisioner is a lightweight WoW addon that helps you track items and set farmin
 
 ### ✨ Features
 
+- **🗺️ Minimap Icon**: Quick access via clickable minimap button
 - **📋 Item Tracking**: Drag items into the Manager window to track them
 - **🎯 Goal Setting**: Set target quantities for each item (e.g., "Farm 100 Ore")
 - **🔔 Alerts**: Get visual and sound notifications when you reach your goals
@@ -22,6 +23,7 @@ Provisioner is a lightweight WoW addon that helps you track items and set farmin
 - **🌍 Localization**: Full support for English and French
 - **📤 Import/Export**: Share your farming lists with friends
 - **📖 Interactive Guide**: Built-in help system
+- **⌨️ ESC Key Support**: Close windows with ESC key
 
 ### 🚀 Installation
 
@@ -62,6 +64,7 @@ Provisioner est un addon WoW léger qui vous aide à suivre vos objectifs de far
 
 ### ✨ Fonctionnalités
 
+- **🗺️ Icône Minimap**: Accès rapide via un bouton cliquable sur la minimap
 - **📋 Suivi d'Objets**: Glissez des objets dans la fenêtre Manager pour les suivre
 - **🎯 Définition d'Objectifs**: Définissez des quantités cibles pour chaque objet (ex: "Farmer 100 Minerais")
 - **🔔 Alertes**: Recevez des notifications visuelles et sonores quand vous atteignez vos objectifs
@@ -70,6 +73,7 @@ Provisioner est un addon WoW léger qui vous aide à suivre vos objectifs de far
 - **🌍 Localisation**: Support complet pour l'anglais et le français
 - **📤 Import/Export**: Partagez vos listes de farm avec vos amis
 - **📖 Guide Interactif**: Système d'aide intégré
+- **⌨️ Support Touche Échap**: Fermez les fenêtres avec la touche Échap
 
 ### 🚀 Installation
 
